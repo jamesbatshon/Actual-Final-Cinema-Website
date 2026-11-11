@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from flask import Flask, render_template
+from dotenv import load_dotenv
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from sqlalchemy import event
@@ -32,11 +33,14 @@ def load_user(user_id):
 
 
 def create_app(test_config=None):
+    # python app.py does not automatically load .env unless we do so explicitly.
+    load_dotenv(Path(__file__).resolve().parent / ".env")
     app = Flask(__name__, instance_relative_config=True)
     Path(app.instance_path).mkdir(parents=True, exist_ok=True)
     app.config.update(
         SECRET_KEY=os.environ.get("SECRET_KEY") or secrets.token_hex(32),
-        SQLALCHEMY_DATABASE_URI=os.environ.get("DATABASE_URL", "sqlite:///cinema.db"),
+        SQLALCHEMY_DATABASE_URI=os.environ.get("SQLALCHEMY_DATABASE_URI"),
+        SQLALCHEMY_ENGINE_OPTIONS={"pool_pre_ping": True},
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         MAX_CONTENT_LENGTH=3 * 1024 * 1024,
         SESSION_COOKIE_HTTPONLY=True,
@@ -47,6 +51,11 @@ def create_app(test_config=None):
     )
     if test_config:
         app.config.update(test_config)
+    if not app.config.get("SQLALCHEMY_DATABASE_URI"):
+        raise RuntimeError(
+            "SQLALCHEMY_DATABASE_URI is missing. Create a .env file from "
+            ".env.example and configure your UC3M MariaDB connection."
+        )
 
     db.init_app(app)
     login_manager.init_app(app)

@@ -21,7 +21,7 @@ The original `static/css/styles.css` remains in place to provide shared layout a
 5. The `static/css/classic-cinema.css` file is new. No Python files, original CSS, data or uploads are overwritten by the patch.
 6. Restart with `python app.py` and hard-refresh your browser with Ctrl+F5 so it loads the new CSS.
 
-There is **no database migration needed**. Do not delete or replace your SQLite database just to update styling. Keep the same `SECRET_KEY` so existing Flask sessions remain valid.
+There is **no database migration needed** for styling changes. Keep your MariaDB data and the same `SECRET_KEY` so existing Flask sessions remain valid.
 
 If starting from scratch instead, extract the full **Screenlane_Classic_Cinema_Flask_Project.zip**, open its inner `screenlane` directory in VS Code, and follow `README.md` for installation and database setup.
 
