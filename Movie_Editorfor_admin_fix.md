@@ -13,7 +13,7 @@ This update adds a staff-only editor to the **Screenlane Classic Cinema** versio
 7. Sign in as management staff, open **Staff dashboard → Movies** and click **Edit** next to a movie. A staff-only **Edit this movie** link is also available on movie detail pages.
 8. Change the title, genre, rating or choose a new poster. Your draft will preview immediately **without saving**. Click **Save changes** when ready. **Reset draft** restores the form fields, while **Cancel** leaves the database untouched.
 
-There is **no database migration** and **no need to re-run `python main.py seed`**. Your existing users, movie records, showtimes, seat reservations and uploaded posters will remain in place.
+There is **no database migration** and **no need for any sample-data seeding**. Your existing users, movie records, showtimes, seat reservations and uploaded posters will remain in place.
 
 ## Files introduced / changed
 
